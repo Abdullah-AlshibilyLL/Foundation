@@ -55,6 +55,9 @@ namespace Foundation
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAzureBlobProvider();
+            services.AddAzureEventProvider();
+
             services.Configure<DataAccessOptions>(options => options.ConnectionStrings.Add(new ConnectionStringOptions
             {
                 Name = "EcfSqlConnection",
@@ -106,15 +109,16 @@ namespace Foundation
                 o.EnablePreviewFeatures = true;
                 o.IncludeEmptyContentProperties = true;
                 o.FlattenPropertyModel = false;
-                o.IncludeMasterLanguage = false; 
-                
+                o.IncludeMasterLanguage = false;
+
             });
 
             // Content Delivery API
             services.AddContentDeliveryApi()
                 .WithFriendlyUrl()
                 .WithSiteBasedCors();
-            services.AddContentDeliveryApi(OpenIDConnectOptionsDefaults.AuthenticationScheme, options => {
+            services.AddContentDeliveryApi(OpenIDConnectOptionsDefaults.AuthenticationScheme, options =>
+            {
                 options.SiteDefinitionApiEnabled = true;
             })
                .WithFriendlyUrl()
@@ -140,29 +144,29 @@ namespace Foundation
                 options.DisableScopeValidation = true;
             });
 
-            services.AddOpenIDConnect<SiteUser>(options =>
-            {
-                //options.RequireHttps = !_webHostingEnvironment.IsDevelopment();
-                var application = new OpenIDConnectApplication()
-                {
-                    ClientId = "postman-client",
-                    ClientSecret = "postman",
-                    Scopes =
-                    {
-                        ContentDeliveryApiOptionsDefaults.Scope,
-                        ContentManagementApiOptionsDefaults.Scope,
-                        ContentDefinitionsApiOptionsDefaults.Scope,
-                    }
-                };
+            //services.AddOpenIDConnect<SiteUser>(true, null, null, true, options =>
+            //{
+            //    //options.RequireHttps = !_webHostingEnvironment.IsDevelopment();
+            //    var application = new OpenIDConnectApplication()
+            //    {
+            //        ClientId = "postman-client",
+            //        ClientSecret = "postman",
+            //        Scopes =
+            //        {
+            //            ContentDeliveryApiOptionsDefaults.Scope,
+            //            ContentManagementApiOptionsDefaults.Scope,
+            //            ContentDefinitionsApiOptionsDefaults.Scope,
+            //        }
+            //    };
 
-                // Using Postman for testing purpose.
-                // The authorization code is sent to postman after successful authentication.
-                application.RedirectUris.Add(new Uri("https://oauth.pstmn.io/v1/callback"));
-                options.Applications.Add(application);
-                options.AllowResourceOwnerPasswordFlow = true;
-            });
-            
-            services.AddOpenIDConnectUI();
+            //    // Using Postman for testing purpose.
+            //    // The authorization code is sent to postman after successful authentication.
+            //    application.RedirectUris.Add(new Uri("https://oauth.pstmn.io/v1/callback"));
+            //    options.Applications.Add(application);
+            //    options.AllowResourceOwnerPasswordFlow = true;
+            //});
+
+            //services.AddOpenIDConnectUI();
 
             services.ConfigureContentDeliveryApiSerializer(settings => settings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore);
 

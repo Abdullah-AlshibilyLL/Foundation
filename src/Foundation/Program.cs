@@ -12,13 +12,13 @@ namespace Foundation
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var isDevelopment = environment == Environments.Development;
 
-            if (isDevelopment)
-            {
+            //if (isDevelopment)
+            //{
                 Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Warning()
                 .WriteTo.File("App_Data/log.txt", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
-            }
+            //}
 
 
             CreateHostBuilder(args, isDevelopment).Build().Run();
@@ -40,6 +40,7 @@ namespace Foundation
             {
                 return Host.CreateDefaultBuilder(args)
                     .ConfigureCmsDefaults()
+                    .UseSerilog()
                     .ConfigureWebHostDefaults(webBuilder =>
                     {
                         webBuilder.UseStartup<Startup>();

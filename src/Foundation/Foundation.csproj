@@ -9,12 +9,14 @@
 		<PackageReference Include="Advanced.CMS.AdvancedReviews" Version="1.1.2" />
 		<PackageReference Include="Baaijte.Optimizely.ImageSharp.Web" Version="2.0.0" />
 		<PackageReference Include="Boxed.AspNetCore.TagHelpers" Version="6.0.0" />
+		<PackageReference Include="EPiServer.Azure" Version="11.0.1" />
 		<PackageReference Include="EPiServer.CMS.WelcomeIntegration.UI" Version="1.0.0" />
 		<PackageReference Include="EPiServer.Commerce" Version="14.5.0" />
 		<PackageReference Include="EPiServer.CMS" Version="12.10.0" />
 		<PackageReference Include="EPiServer.CMS.AspNetCore.HtmlHelpers" Version="12.8.0" />
 		<PackageReference Include="EPiServer.CMS.Core" Version="12.8.0" />
 		<PackageReference Include="EPiServer.CMS.UI" Version="12.10.0" />
+		<PackageReference Include="EPiServer.Commerce.Azure" Version="15.0.13" />
 		<PackageReference Include="EPiServer.ContentDefinitionsApi" Version="3.5.0" />
 		<PackageReference Include="EPiServer.ContentDeliveryApi.Cms" Version="3.5.0" />
 		<PackageReference Include="EPiServer.ContentDeliveryApi.Search" Version="3.5.0" />
@@ -69,5 +71,7 @@
 		<Compile Remove="Infrastructure\Kpi\FilledInFormKpi.cs" />
 		<Folder Include="Infrastructure\Kpi\" />
 		<Folder Include="wwwroot\" />
+		<Content Remove="modules\_protected\EPiServer.Forms\Forms.config" />
+		<Content Remove="modules\_protected\Geta.NotFoundHandler.Optimizely\module.config" />
 	</ItemGroup>
 </Project>
